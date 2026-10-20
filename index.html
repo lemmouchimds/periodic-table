@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atelier de l'atome</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..700&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@500..700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Dégradés partagés par tous les dessins d'atomes -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <radialGradient id="gp" cx="35%" cy="30%" r="75%">
+        <stop offset="0" stop-color="oklch(78% 0.13 32)"/>
+        <stop offset="1" stop-color="oklch(52% 0.2 28)"/>
+      </radialGradient>
+      <radialGradient id="gn" cx="35%" cy="30%" r="75%">
+        <stop offset="0" stop-color="oklch(88% 0.03 95)"/>
+        <stop offset="1" stop-color="oklch(62% 0.045 95)"/>
+      </radialGradient>
+      <radialGradient id="ge" cx="35%" cy="30%" r="75%">
+        <stop offset="0" stop-color="oklch(75% 0.12 255)"/>
+        <stop offset="1" stop-color="oklch(46% 0.18 260)"/>
+      </radialGradient>
+    </defs>
+  </svg>
+
+  <div class="wrap">
+    <header class="masthead">
+      <div class="brand">
+        <svg class="logo" viewBox="-50 -50 100 100" aria-hidden="true">
+          <ellipse rx="44" ry="16" class="lg-orb"/>
+          <ellipse rx="44" ry="16" class="lg-orb" transform="rotate(60)"/>
+          <ellipse rx="44" ry="16" class="lg-orb" transform="rotate(-60)"/>
+          <circle r="8" fill="url(#gp)"/>
+          <circle cx="44" r="4.5" fill="url(#ge)"/>
+        </svg>
+        <div>
+          <h1 data-i18n-html="app.title"></h1>
+          <p class="tag" data-i18n="app.tag"></p>
+        </div>
+      </div>
+      <div class="lang" role="group" aria-label="Langue / Language / اللغة">
+        <button type="button" data-lang="fr" lang="fr">FR</button>
+        <button type="button" data-lang="en" lang="en">EN</button>
+        <button type="button" data-lang="ar" lang="ar">عربي</button>
+      </div>
+    </header>
+
+    <nav class="tabs" role="tablist">
+      <button type="button" role="tab" data-tab="table"><span class="num">01</span><span data-i18n="tab.table"></span></button>
+      <button type="button" role="tab" data-tab="builder"><span class="num">02</span><span data-i18n="tab.builder"></span></button>
+      <button type="button" role="tab" data-tab="rules"><span class="num">03</span><span data-i18n="tab.rules"></span></button>
+      <button type="button" role="tab" data-tab="quiz"><span class="num">04</span><span data-i18n="tab.quiz"></span></button>
+    </nav>
+
+    <main>
+      <!-- 01 · Tableau -->
+      <section class="panel" data-panel="table" role="tabpanel">
+        <div class="table-layout">
+          <div class="table-col">
+            <div class="table-head">
+              <h2 data-i18n="table.title"></h2>
+              <div class="seg" id="colorBy" role="group">
+                <span class="seg-label" data-i18n="table.colorBy"></span>
+                <button type="button" data-mode="family" data-i18n="mode.family"></button>
+                <button type="button" data-mode="shells" data-i18n="mode.shells"></button>
+                <button type="button" data-mode="valence" data-i18n="mode.valence"></button>
+              </div>
+            </div>
+            <div class="ptable" id="ptable" dir="ltr"></div>
+            <ul class="legend" id="legend"></ul>
+          </div>
+          <aside class="detail" id="detail" aria-live="polite"></aside>
+        </div>
+      </section>
+
+      <!-- 02 · Construire -->
+      <section class="panel" data-panel="builder" role="tabpanel">
+        <div class="builder">
+          <div class="stage-col">
+            <h2 data-i18n="b.title"></h2>
+            <p class="hint" data-i18n="b.hint"></p>
+            <div class="stage" id="stage">
+              <div class="stage-svg" id="stageSvg"></div>
+              <p class="stage-empty" data-i18n="b.drop"></p>
+            </div>
+            <div class="tray" id="tray">
+              <div class="trow">
+                <button type="button" class="tok tok-p" data-drag="p" aria-label="Proton +">+</button>
+                <span class="tname" data-i18n="b.proton"></span>
+                <div class="stepper">
+                  <button type="button" data-dec="p" aria-label="−">−</button>
+                  <output id="cnt-p">0</output>
+                  <button type="button" data-inc="p" aria-label="+">+</button>
+                </div>
+              </div>
+              <div class="trow">
+                <button type="button" class="tok tok-n" data-drag="n" aria-label="Neutron">n</button>
+                <span class="tname" data-i18n="b.neutron"></span>
+                <div class="stepper">
+                  <button type="button" data-dec="n" aria-label="−">−</button>
+                  <output id="cnt-n">0</output>
+                  <button type="button" data-inc="n" aria-label="+">+</button>
+                </div>
+              </div>
+              <div class="trow">
+                <button type="button" class="tok tok-e" data-drag="e" aria-label="Électron −">−</button>
+                <span class="tname" data-i18n="b.electron"></span>
+                <div class="stepper">
+                  <button type="button" data-dec="e" aria-label="−">−</button>
+                  <output id="cnt-e">0</output>
+                  <button type="button" data-inc="e" aria-label="+">+</button>
+                </div>
+              </div>
+              <button type="button" class="link-btn" id="resetB" data-i18n="b.reset"></button>
+            </div>
+          </div>
+
+          <div class="builder-side">
+            <div class="challenge" id="challenge" aria-live="polite"></div>
+            <div class="identity" id="identity" aria-live="polite"></div>
+            <div class="live">
+              <h3 data-i18n="b.live"></h3>
+              <div class="formulas" id="live" dir="ltr" lang="fr"></div>
+            </div>
+            <div class="mini-wrap">
+              <h3 data-i18n="b.jump"></h3>
+              <div class="mini" id="mini" dir="ltr"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03 · Règles (en français) -->
+      <section class="panel" data-panel="rules" role="tabpanel">
+        <div class="rules-head">
+          <h2 data-i18n="rules.title"></h2>
+          <p class="hint" data-i18n="rules.note"></p>
+        </div>
+        <div class="rules" id="rules" dir="ltr" lang="fr"></div>
+      </section>
+
+      <!-- 04 · Quiz -->
+      <section class="panel" data-panel="quiz" role="tabpanel">
+        <div class="quiz" id="quiz"></div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <span class="key"><i class="dot dot-p"></i>p<sup>+</sup></span>
+      <span class="key"><i class="dot dot-n"></i>n</span>
+      <span class="key"><i class="dot dot-e"></i>e<sup>−</sup></span>
+    </footer>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
